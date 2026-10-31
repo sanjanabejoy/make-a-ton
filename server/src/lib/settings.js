@@ -21,3 +21,4 @@ export async function setSetting(key, value, client = pool) {
   );
   return value;
 }
+

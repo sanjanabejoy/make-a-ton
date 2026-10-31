@@ -19,3 +19,4 @@ export function canTransition(from, to) {
   const allowed = TRANSITIONS[from] || [];
   return allowed.includes(to);
 }
+

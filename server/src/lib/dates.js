@@ -108,3 +108,4 @@ export function periodEnd(startStr, period, anchorDay) {
   const nextStart = addPeriod(startStr, period, anchorDay);
   return addDays(nextStart, -1);
 }
+

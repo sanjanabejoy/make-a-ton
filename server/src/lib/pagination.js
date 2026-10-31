@@ -37,3 +37,4 @@ export function parsePagination(query, allowedSortColumns = ['created_at'], defa
     q
   };
 }
+

@@ -36,3 +36,4 @@ router.patch('/:id', validate(updateStaffSchema), async (req, res, next) => {
     next(err);
   }
 });
+

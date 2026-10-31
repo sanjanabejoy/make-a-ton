@@ -124,3 +124,4 @@ router.get('/:id/upcoming-invoice', async (req, res, next) => {
     next(err);
   }
 });
+

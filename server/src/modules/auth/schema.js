@@ -27,3 +27,4 @@ export const resetPasswordSchema = z.object({
     'Password must be at least 9 characters long and contain at least one uppercase letter, one lowercase letter, and one special character'
   )
 });
+

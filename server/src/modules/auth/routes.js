@@ -66,3 +66,4 @@ router.get('/me', authenticate, async (req, res, next) => {
     next(err);
   }
 });
+

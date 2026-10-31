@@ -20,3 +20,4 @@ router.get('/emails', authenticate, requireRole('admin'), async (req, res, next)
     next(err);
   }
 });
+

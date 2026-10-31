@@ -39,3 +39,4 @@ export function format(paiseOrDecimal, isPaise = true, currency = 'INR') {
     maximumFractionDigits: 2
   }).format(value);
 }
+

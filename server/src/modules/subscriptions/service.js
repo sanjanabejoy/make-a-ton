@@ -943,6 +943,42 @@ export async function getTimeline(id) {
 }
 
 export async function getUpcomingInvoice(id) {
-  // Hooked up in Phase D
-  return null;
+  const subRes = await pool.query('SELECT * FROM subscriptions WHERE id = $1', [id]);
+  if (subRes.rows.length === 0) return null;
+  const sub = subRes.rows[0];
+
+  if (!['active', 'confirmed'].includes(sub.status)) return null;
+
+  const planRes = await pool.query('SELECT * FROM plans WHERE id = $1', [sub.plan_id]);
+  if (planRes.rows.length === 0) return null;
+  const plan = planRes.rows[0];
+
+  const [linesRes, prodsRes, varsRes, taxesRes, discRes, termRes] = await Promise.all([
+    pool.query('SELECT * FROM subscription_lines WHERE subscription_id = $1', [id]),
+    pool.query('SELECT * FROM products'),
+    pool.query('SELECT * FROM product_variants'),
+    pool.query('SELECT * FROM tax_rules WHERE is_active = true'),
+    pool.query('SELECT * FROM discounts WHERE is_active = true'),
+    sub.payment_term_id ? pool.query('SELECT * FROM payment_terms WHERE id = $1', [sub.payment_term_id]) : { rows: [] }
+  ]);
+
+  const { computeInvoice } = await import('../billing/engine.js');
+  const periodStart = sub.next_billing_date || sub.start_date;
+
+  try {
+    const inv = computeInvoice({
+      subscription: sub,
+      plan,
+      lines: linesRes.rows,
+      periodStart,
+      products: prodsRes.rows,
+      variants: varsRes.rows,
+      taxRules: taxesRes.rows,
+      discounts: discRes.rows,
+      paymentTerm: termRes.rows[0] || null
+    });
+    return inv;
+  } catch (err) {
+    return null;
+  }
 }

@@ -47,3 +47,4 @@ export function errorHandler(err, req, res, next) {
 
   return res.status(status).json(responseBody);
 }
+

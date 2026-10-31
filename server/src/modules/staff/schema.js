@@ -14,3 +14,4 @@ export const updateStaffSchema = z.object({
   name: z.string().min(1, 'Name is required').optional(),
   isActive: z.boolean().optional()
 });
+

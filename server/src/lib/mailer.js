@@ -47,3 +47,4 @@ export async function sendMail({ to, subject, body, kind = 'notification' }, cli
 }
 
 export const send = sendMail;
+

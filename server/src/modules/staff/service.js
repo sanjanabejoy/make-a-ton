@@ -112,3 +112,4 @@ export async function updateStaff(id, { name, isActive }) {
 
   return res.rows[0];
 }
+

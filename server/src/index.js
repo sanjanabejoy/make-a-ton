@@ -23,3 +23,4 @@ process.on('SIGTERM', () => {
     console.log('[server] HTTP server closed');
   });
 });
+

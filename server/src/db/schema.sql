@@ -361,3 +361,4 @@ CREATE INDEX IF NOT EXISTS payments_invoice_idx ON payments (invoice_id);
 CREATE INDEX IF NOT EXISTS payments_paid_on_idx ON payments (paid_on) WHERE voided_at IS NULL;
 CREATE INDEX IF NOT EXISTS events_sub_idx ON events (subscription_id, occurred_at DESC);
 CREATE INDEX IF NOT EXISTS reminders_status_idx ON reminders (status, scheduled_for);
+

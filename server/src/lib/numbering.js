@@ -16,3 +16,4 @@ export async function getNextInvoiceNumber(client = pool) {
   const num = res.rows[0].seq;
   return `INV-${String(num).padStart(6, '0')}`;
 }
+

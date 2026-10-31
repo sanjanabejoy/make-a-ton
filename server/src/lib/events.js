@@ -37,3 +37,4 @@ export async function logEvent(
   const res = await client.query(query, values);
   return res.rows[0].id;
 }
+
