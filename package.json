@@ -1,0 +1,11 @@
+{
+  "name": "subscriptiq",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SubscriptIQ — Subscription Management & Revenue Operations",
+  "scripts": {
+    "dev": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "setup": "npm --prefix client install"
+  }
+}
