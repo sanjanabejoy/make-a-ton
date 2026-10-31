@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "npm --prefix client run dev",
     "build": "npm --prefix client run build",
-    "setup": "npm --prefix client install"
+    "setup": "npm --prefix client install && npm --prefix server install",
+    "server:dev": "npm --prefix server run dev",
+    "server:test": "npm --prefix server test",
+    "server:migrate": "npm --prefix server run migrate"
   }
 }
