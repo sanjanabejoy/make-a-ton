@@ -7,6 +7,11 @@ import staffRoutes from './modules/staff/routes.js';
 import invoiceRoutes from './modules/invoices/routes.js';
 import paymentRoutes from './modules/payments/routes.js';
 import subscriptionRoutes from './modules/subscriptions/routes.js';
+import { productsRoutes, plansRoutes, taxesRoutes, discountsRoutes, paymentTermsRoutes, quoteTemplatesRoutes } from './modules/catalog.js';
+import customerRoutes from './modules/customers/routes.js';
+import settingsRoutes from './modules/settings/routes.js';
+import dashboardRoutes from './modules/dashboard/routes.js';
+import portalRoutes from './modules/portal/routes.js';
 
 export const app = express();
 app.use(helmet());
@@ -29,6 +34,16 @@ app.use('/api/staff', staffRoutes);
 app.use('/api/subscriptions', subscriptionRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/products', productsRoutes);
+app.use('/api/plans', plansRoutes);
+app.use('/api/taxes', taxesRoutes);
+app.use('/api/discounts', discountsRoutes);
+app.use('/api/payment-terms', paymentTermsRoutes);
+app.use('/api/quote-templates', quoteTemplatesRoutes);
+app.use('/api/customers', customerRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/portal', portalRoutes);
 app.use((_req, _res, next) => next(Object.assign(new Error('Route not found'), { code: 'NOT_FOUND', status: 404 })));
 app.use((err, _req, res, _next) => {
   const status = err.status || (err.code === 'VALIDATION_ERROR' ? 422 : 500);

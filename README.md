@@ -107,7 +107,7 @@ To create a local environment file explicitly:
 cp client/.env.example client/.env
 ```
 
-For a real API integration, set `VITE_USE_MOCKS=false`. The backend configuration is documented in [`server/.env.example`](./server/.env.example). Frontend requests are relative to `/api`, so configure a development proxy or serve the frontend behind the API host.
+For a real API integration, set `VITE_USE_MOCKS=false` and set `VITE_API_URL` to the backend URL, for example `https://your-backend.onrender.com/api`. The backend configuration is documented in [`server/.env.example`](./server/.env.example). Local development uses the Vite `/api` proxy when `VITE_API_URL` is omitted.
 
 ## Project structure
 

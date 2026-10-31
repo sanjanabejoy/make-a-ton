@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { z } from 'zod';
+import { auth, requireRole, validate } from '../../middleware/auth.js';
+import { getSettings, saveSettings } from '../../lib/settings.js';
+const router = Router();
+const schema = z.object({ company: z.object({ name: z.string(), address: z.string(), gstin: z.string() }), currency: z.string().length(3), reminderOffsets: z.array(z.number().int()), autoConfirmInvoices: z.boolean(), autoSendReminders: z.boolean() });
+router.use(auth, requireRole('admin'));
+router.get('/', async (_req, res, next) => { try { res.json({ data: await getSettings() }); } catch (e) { next(e); } });
+router.put('/', validate(schema), async (req, res, next) => { try { res.json({ data: await saveSettings(req.body) }); } catch (e) { next(e); } });
+export default router;
