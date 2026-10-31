@@ -2,6 +2,10 @@
 
 > Subscription management and revenue operations for teams moving beyond spreadsheets.
 
+[** Open the hosted app**](https://make-a-ton-1.onrender.com/login)
+[** Demo Video**](https://drive.google.com/drive/folders/1N161M2TdAdJm1qI2cHL3baMtrkh3P5xO?usp=drive_link)
+
+
 SubscriptIQ is a role-aware web application for managing customers, products, recurring plans, subscriptions, invoices, payments, and migration from Excel or CSV files. It gives operations teams one place to manage the subscription lifecycle and gives customers a self-service portal for their own records.
 
 This repository contains a React frontend prototype and a Node/Express backend core. The frontend still runs with a stateful in-memory mock API by default, while the backend provides the PostgreSQL-backed API foundation and billing primitives.
