@@ -6,3 +6,13 @@
 4. **Registration / Customer Linking**: Customer registration links to existing customer by email if unlinked, or creates a new customer profile.
 5. **Currency and Formatting**: Fixed default currency is `INR` (₹), formatted with `Intl.NumberFormat('en-IN')` with tabular numerals.
 6. **Date Handling**: Uses `YYYY-MM-DD` strings consistently; respects simulated clock date if set via `GET /api/clock`.
+
+## P4 (Frontend B + Demo Lead) Assumptions
+
+1. **Explainable Invoices ("Why?")**: Stored as ordered step arrays (`calcTrail`) at invoice line generation time, covering base price, variant surcharges, product discounts, allocated subscription discounts, and taxes. Running subtotals are visualized as a vertical stepper with detailed explanations.
+2. **Billing Time Machine Idempotency**: Successive runs against the same simulated target date return 0 duplicate invoices ("Nothing skipped, nothing duplicated"). The runner advances the subscription billing pointer without re-billing already generated periods.
+3. **Collections Risk Model**: Risk score uses deterministic point thresholds (High ≥60, Medium 30-59, Low <30) derived from days overdue, upcoming expiry, and pause histories. Marked with the required regulatory footnote that it is a rule-based prioritisation tool, not a statistical prediction.
+4. **Print Layout**: Standalone clean printable view rendered without navigation chrome (`public: true` in routes), with `@media print` rules hiding action buttons.
+5. **Bank Reconciliation**: Statement CSV credit lines are matched using exact invoice number regexes (High confidence), customer narrative tokens (Medium confidence), and unique outstanding balances, recording payments only upon explicit user confirmation.
+6. **Simulated Reminders & Emails**: In the absence of an external SMTP gateway, emails are transparently captured in the in-app Developer Mailbox (`/dev/mailbox`), clearly badged as "Simulated" in the user interface.
+
