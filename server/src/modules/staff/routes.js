@@ -1,0 +1,12 @@
+import { Router } from 'express';
+import bcrypt from 'bcryptjs';
+import { z } from 'zod';
+import { query } from '../../db/pool.js';
+import { auth, passwordSchema, requireRole, validate } from '../../middleware/auth.js';
+const router = Router();
+const staff = z.object({ name: z.string().min(1), email: z.string().email(), password: passwordSchema });
+router.use(auth, requireRole('admin'));
+router.get('/', async (_req, res, next) => { try { const { rows } = await query("SELECT id,name,email,role,is_active,created_at FROM users WHERE role='staff' ORDER BY id"); res.json({ data: rows }); } catch (e) { next(e); } });
+router.post('/', validate(staff), async (req, res, next) => { try { const hash = await bcrypt.hash(req.body.password, 10); const { rows } = await query("INSERT INTO users(name,email,password_hash,role,created_by) VALUES($1,$2,$3,'staff',$4) RETURNING id,name,email,role,is_active", [req.body.name, req.body.email.toLowerCase(), hash, req.user.id]); res.status(201).json({ data: rows[0] }); } catch (e) { next(e); } });
+router.patch('/:id', async (req, res, next) => { try { const { rows } = await query('UPDATE users SET name=COALESCE($1,name),is_active=COALESCE($2,is_active) WHERE id=$3 AND role=\'staff\' RETURNING id,name,email,role,is_active', [req.body.name, req.body.isActive, req.params.id]); if (!rows[0]) throw Object.assign(new Error('Staff member not found'), { code: 'NOT_FOUND', status: 404 }); res.json({ data: rows[0] }); } catch (e) { next(e); } });
+export default router;

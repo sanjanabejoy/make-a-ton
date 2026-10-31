@@ -6,6 +6,7 @@
 4. **Registration / Customer Linking**: Customer registration links to existing customer by email if unlinked, or creates a new customer profile.
 5. **Currency and Formatting**: Fixed default currency is `INR` (₹), formatted with `Intl.NumberFormat('en-IN')` with tabular numerals.
 6. **Date Handling**: Uses `YYYY-MM-DD` strings consistently; respects simulated clock date if set via `GET /api/clock`.
+7. **Backend P1 scope**: The initial backend delivery uses raw PostgreSQL queries and exposes the Phase A-E foundation and core routes; advanced daily jobs, migration, reconciliation, and dashboard modules remain separate follow-up work.
 
 ## P4 (Frontend B + Demo Lead) Assumptions
 
@@ -15,4 +16,3 @@
 4. **Print Layout**: Standalone clean printable view rendered without navigation chrome (`public: true` in routes), with `@media print` rules hiding action buttons.
 5. **Bank Reconciliation**: Statement CSV credit lines are matched using exact invoice number regexes (High confidence), customer narrative tokens (Medium confidence), and unique outstanding balances, recording payments only upon explicit user confirmation.
 6. **Simulated Reminders & Emails**: In the absence of an external SMTP gateway, emails are transparently captured in the in-app Developer Mailbox (`/dev/mailbox`), clearly badged as "Simulated" in the user interface.
-

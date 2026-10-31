@@ -1,0 +1,10 @@
+import { Router } from 'express';
+import { query } from '../../db/pool.js';
+import { auth, requireRole } from '../../middleware/auth.js';
+import { getToday } from '../../lib/clock.js';
+const router = Router(); router.use(auth, requireRole('admin', 'staff'));
+router.get('/', async (req, res, next) => { try { const today = await getToday(); const overdue = req.query.overdue === 'true'; const { rows } = await query(`SELECT i.*, c.name AS customer_name, (i.total-i.amount_paid) AS outstanding, (i.status='confirmed' AND i.due_date<$1 AND i.amount_paid<i.total) AS is_overdue FROM invoices i JOIN customers c ON c.id=i.customer_id WHERE ($2=false OR (i.status='confirmed' AND i.due_date<$1 AND i.amount_paid<i.total)) ORDER BY i.invoice_date DESC LIMIT 100`, [today, overdue]); res.json({ data: rows }); } catch (e) { next(e); } });
+router.get('/:id', async (req, res, next) => { try { const { rows } = await query('SELECT * FROM invoices WHERE id=$1', [req.params.id]); if (!rows[0]) throw Object.assign(new Error('Invoice not found'), { code: 'NOT_FOUND', status: 404 }); res.json({ data: rows[0] }); } catch (e) { next(e); } });
+router.post('/:id/confirm', async (req, res, next) => { try { const { rows } = await query("UPDATE invoices SET status='confirmed',confirmed_at=now() WHERE id=$1 AND status='draft' RETURNING *", [req.params.id]); if (!rows[0]) throw Object.assign(new Error('Invoice cannot be confirmed'), { code: 'RULE_VIOLATION', status: 409 }); res.json({ data: rows[0] }); } catch (e) { next(e); } });
+router.post('/bulk-confirm', async (req, res, next) => { try { const { rows } = await query("UPDATE invoices SET status='confirmed',confirmed_at=now() WHERE id=ANY($1::bigint[]) AND status='draft' RETURNING id", [req.body.ids || []]); res.json({ data: { confirmed: rows.map((r) => Number(r.id)) } }); } catch (e) { next(e); } });
+export default router;

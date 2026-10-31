@@ -4,7 +4,7 @@
 
 SubscriptIQ is a role-aware web application for managing customers, products, recurring plans, subscriptions, invoices, payments, and migration from Excel or CSV files. It gives operations teams one place to manage the subscription lifecycle and gives customers a self-service portal for their own records.
 
-This repository currently contains the **React frontend prototype**. It runs with a stateful in-memory mock API by default, so the main workflows can be explored without a separate backend.
+This repository contains a React frontend prototype and a Node/Express backend core. The frontend still runs with a stateful in-memory mock API by default, while the backend provides the PostgreSQL-backed API foundation and billing primitives.
 
 ## What you can do
 
@@ -32,6 +32,7 @@ The application protects routes by role and uses separate layouts for the operat
 
 - Node.js 18 or newer
 - npm 9 or newer
+- Docker (for the PostgreSQL development database)
 
 ### Install
 
@@ -42,6 +43,20 @@ npm run setup
 ```
 
 This installs the frontend dependencies in `client/`.
+
+The setup command also installs backend dependencies in `server/`.
+
+### Start the backend
+
+Start PostgreSQL and apply the schema:
+
+```bash
+docker compose up -d
+npm run server:migrate
+npm run server:dev
+```
+
+The API listens on [http://localhost:4000](http://localhost:4000), with a health check at `/api/health`.
 
 ### Start the development server
 
@@ -92,7 +107,7 @@ To create a local environment file explicitly:
 cp client/.env.example client/.env
 ```
 
-For a real API integration, set `VITE_USE_MOCKS=false` and provide an API implementation that matches the routes used by [`client/src/api/http.js`](./client/src/api/http.js). Requests are made relative to `/api`, so configure a development proxy or serve the frontend behind the API host.
+For a real API integration, set `VITE_USE_MOCKS=false`. The backend configuration is documented in [`server/.env.example`](./server/.env.example). Frontend requests are relative to `/api`, so configure a development proxy or serve the frontend behind the API host.
 
 ## Project structure
 
@@ -110,6 +125,13 @@ For a real API integration, set `VITE_USE_MOCKS=false` and provide an API implem
 │   │   └── index.css     Global styles and Tailwind entry point
 │   ├── package.json
 │   └── vite.config.js
+├── server/
+│   ├── src/
+│   │   ├── db/            PostgreSQL schema, pool, and migrations
+│   │   ├── lib/           Money, date, clock, numbering, events, and mail helpers
+│   │   ├── middleware/    Authentication, role checks, and validation
+│   │   └── modules/       Auth, staff, subscriptions, billing, invoices, and payments
+│   └── tests/             P1 backend unit tests
 ├── docs/
 │   └── ASSUMPTIONS.md    Frontend implementation assumptions
 ├── ARCHITECTURE.md       Proposed domain and system architecture
@@ -128,9 +150,9 @@ For a real API integration, set `VITE_USE_MOCKS=false` and provide an API implem
 | Forms and validation | React Hook Form, Zod, and `@hookform/resolvers` |
 | Icons | Lucide React |
 | Date utilities | date-fns |
-| API mode | Stateful Axios mock adapter or a relative `/api` backend |
+| API mode | Stateful Axios mock adapter or the Node/Express `/api` backend |
 
-The broader target architecture is documented in [`ARCHITECTURE.md`](./ARCHITECTURE.md). It describes a modular backend with PostgreSQL, Prisma, Redis/BullMQ, notifications, and analytics; those services are not included in the current frontend-only checkout.
+The broader target architecture is documented in [`ARCHITECTURE.md`](./ARCHITECTURE.md). The current backend uses raw PostgreSQL queries as required by the P1 contract; the remaining modules described in that document are staged implementation work.
 
 ## Main workflows
 
@@ -180,7 +202,7 @@ The mock mode includes representative valid, warning, error, and duplicate rows 
 
 🚧 **Under active development**
 
-This is a hackathon-stage prototype. The frontend flows and mock data are available for demonstration; backend persistence, payment-provider integrations, scheduled jobs, email delivery, and production authentication remain planned integration work.
+This is a hackathon-stage implementation. The frontend flows and mock data are available for demonstration, and the backend core includes persistence, authentication, subscription transitions, invoice calculations, and payments. Payment-provider integrations, scheduled jobs, migration workflows, and production hardening remain planned work.
 
 ## Contributing
 
