@@ -1,334 +1,202 @@
-# make-a-ton
+# SubscriptIQ
 
-#  SubscriptIQ
-### From Spreadsheet Chaos to Intelligent Subscription Management.
+> Subscription management and revenue operations for teams moving beyond spreadsheets.
 
-**SubscriptIQ** is an intelligent subscription management and revenue operations platform that helps businesses migrate from manual Excel workflows to automated subscription billing, payment tracking, and revenue intelligence.
+SubscriptIQ is a role-aware web application for managing customers, products, recurring plans, subscriptions, invoices, payments, and migration from Excel or CSV files. It gives operations teams one place to manage the subscription lifecycle and gives customers a self-service portal for their own records.
 
-> Manage subscriptions. Automate billing. Understand your revenue.
+This repository currently contains the **React frontend prototype**. It runs with a stateful in-memory mock API by default, so the main workflows can be explored without a separate backend.
 
----
+## What you can do
 
-##  About the Project
+- Sign in, register, reset passwords, and switch between Admin, Staff, and Customer experiences.
+- Manage customers, products, product variants, plans, taxes, discounts, payment terms, and quotation templates.
+- Create and manage subscriptions through their lifecycle.
+- Review subscription timelines, invoices, payments, and outstanding balances.
+- Import existing business records through a guided Excel/CSV migration workflow with mapping, validation, preview, and import steps.
+- Use the customer portal to view plans, subscriptions, invoices, payments, and profile information.
+- Configure company and billing settings from the Admin workspace.
 
-Many subscription-based businesses still rely on spreadsheets to manage customers, subscriptions, renewals, invoices, and payments.
+## Screens and roles
 
-This leads to missed renewals, duplicate invoices, payment tracking difficulties, and inaccurate revenue reports.
+| Role | Access |
+| --- | --- |
+| **Admin** | Full operations access, including staff, settings, catalog, migration, subscriptions, and customers |
+| **Staff** | Customer, catalog, quotation, subscription, invoice, and payment workflows |
+| **Customer** | Own portal profile, plans, subscriptions, invoices, and payment history |
 
-**SubscriptIQ solves this problem** by bringing the entire subscription lifecycle into one unified platform, with intelligent automation and seamless Excel/CSV migration.
+The application protects routes by role and uses separate layouts for the operations workspace and customer portal.
 
-Our goal is not just to manage subscriptions but to help businesses make smarter revenue decisions.
+## Quick start
 
----
+### Requirements
 
-##  Key Features
+- Node.js 18 or newer
+- npm 9 or newer
 
-### 1.  Authentication & Role-Based Access
-- Secure user registration and login.
-- Password validation and reset.
-- Three roles: Admin, Staff, and Customer.
-- Role-based permissions and protected customer data.
-- Only Admins can create staff accounts.
+### Install
 
-### 2.  Product & Plan Management
-- Create and manage products.
-- Configure product types, sales prices, and cost prices.
-- Support product variants with additional pricing.
-- Create daily, weekly, monthly, and yearly plans.
-- Configure minimum quantities and availability periods.
-- Support configurable pause, renewal, and closure rules.
+From the repository root:
 
-### 3.  Quotation Management
-- Reusable quotation templates.
-- Create quotations with product and plan details.
-- Configure quotation validity periods.
-- Convert confirmed quotations into subscriptions.
-
-### 4.  Subscription Management
-- Complete subscription lifecycle:
-  `Draft → Quotation → Confirmed → Active → Closed`
-- Unique subscription identification.
-- Customer and plan association.
-- Start and expiry date management.
-- Subscription history and timeline.
-- Pause, renew, and early closure capabilities.
-
-### 5.  Automated Recurring Billing
-- Automatically generate invoices from subscriptions.
-- Daily, weekly, monthly, and yearly billing support.
-- Automatic product, tax, and total calculations.
-- Duplicate invoice prevention.
-- Invoice confirmation, cancellation, sending, and printing.
-
-### 6.  Smart Discount Management
-- Fixed-amount and percentage discounts.
-- Minimum purchase and quantity conditions.
-- Validity periods and usage limits.
-- Product-specific and subscription-wide discounts.
-- Automatic discount application during billing.
-
-### 7.  Payment Management
-- Record payments against invoices.
-- Track payment methods, dates, amounts, and notes.
-- Monitor paid, outstanding, and overdue invoices.
-- Payment history and follow-up tracking.
-
-### 8. Revenue Analytics Dashboard
-- Active subscription metrics.
-- Monthly Recurring Revenue (MRR).
-- Revenue collected.
-- Outstanding payments.
-- Overdue invoice tracking.
-- Plan-wise revenue insights.
-- Upcoming renewals.
-
----
-
-##  Unique & Innovative Features
-
-### 1.  Smart Migration Centre
-**From Excel to SubscriptIQ — without manually rebuilding business records.**
-
-Businesses can migrate their existing subscription workflows into SubscriptIQ.
-
-- Upload Excel (`.xlsx`, `.xls`) and CSV files.
-- Support multiple related business data files.
-- Intelligent column mapping suggestions.
-- Automatic data validation.
-- Duplicate record detection.
-- Missing field and invalid data detection.
-- Migration preview before importing.
-- Batch data import.
-- Migration progress tracking.
-- Error reports and retry support.
-- Migration history and audit trail.
-
-### 2.  Revenue Intelligence Assistant
-An intelligent assistant that helps businesses understand their subscription data.
-
-Example queries:
-- Which customers have overdue invoices?
-- What is our current recurring revenue?
-- Which plans generate the most revenue?
-- Which subscriptions are at risk?
-- How much revenue is still outstanding?
-
-Provides data-driven insights based on actual business records.
-
-### 3.  Smart Payment Recovery
-- Detect failed and overdue payments.
-- Automated payment reminder workflows.
-- Configurable reminder schedules.
-- Payment attempt history.
-- Recovered revenue tracking.
-
-### 4.  Customer Churn Risk Monitor
-Identify subscriptions that may require attention using:
-- Repeated payment failures.
-- Overdue invoices.
-- Upcoming subscription expiry.
-- Previous cancellation or pause history.
-
-Provides explainable risk levels and recommended staff actions.
-
-### 5.  Subscription Timeline
-A complete chronological history of subscription activities:
-- Subscription creation.
-- Quotation confirmation.
-- Activation.
-- Invoice generation.
-- Payment receipt.
-- Pausing and resuming.
-- Renewal and closure.
-
-### 6.  What-if Revenue Simulator
-Experiment with hypothetical business scenarios:
-- Increasing plan prices.
-- Adding new customers.
-- Offering discounts.
-- Simulating customer cancellations.
-
-Understand potential revenue impact without changing actual business records.
-
----
-
-##  User Workspaces
-
-| Admin | Staff | Customer |
-|---|---|---|
-| Full system access | Limited access | Own account only |
-| Manage products and plans | Manage customers | View subscriptions |
-| Manage staff | Manage quotations | View invoices |
-| Configure taxes and discounts | Track invoices | View payments |
-| View analytics | Record payments | Manage requests |
-| Manage migrations | Follow up overdue payments | Manage profile |
-
----
-
-##  Technology Stack
-
-| Layer | Technologies |
-|---|---|
-| Frontend | Nuxt 3, Vue 3, TypeScript |
-| Styling | Tailwind CSS |
-| Backend | Node.js, NestJS |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| Background Jobs | Redis, BullMQ |
-| Data Migration | SheetJS, CSV parsing |
-| Charts | Apache ECharts |
-| Version Control | Git, GitHub |
-
-*The final implementation stack may be adjusted based on the team's development decisions.*
-
----
-
-##  System Architecture
-
-```text
-             SUBSCRIPT IQ
-                   |
-        +----------+----------+
-        |                     |
-   Frontend UI            Backend API
-   (Nuxt / Vue)            (Node.js)
-        |                     |
-        |          +----------+----------+
-        |          |          |          |
-        |       Auth       Billing    Migration
-        |       Module     Engine      Engine
-        |          |          |          |
-        |          +----------+----------+
-        |                     |
-        |                PostgreSQL
-        |                     |
-        |              Background Jobs
-        |                Redis / BullMQ
-        |
-   Admin / Staff / Customer
+```bash
+npm run setup
 ```
 
----
+This installs the frontend dependencies in `client/`.
 
-##  Core Workflow
+### Start the development server
 
-```text
-Customer Registration
-         |
-         v
-Product Selection
-         |
-         v
-Plan Selection
-         |
-         v
-Quotation Creation
-         |
-         v
-Subscription Confirmation
-         |
-         v
-Subscription Activation
-         |
-         v
-Automated Recurring Billing
-         |
-         v
-Invoice Generation
-         |
-         v
-Payment Collection
-         |
-         v
-Revenue Analytics
+```bash
+npm run dev
 ```
 
-### Excel Migration Workflow
+Open the URL printed by Vite, usually [http://localhost:5173](http://localhost:5173).
+
+The equivalent command from the `client/` directory is:
+
+```bash
+npm run dev
+```
+
+### Create a production build
+
+```bash
+npm run build
+```
+
+To preview the production build locally:
+
+```bash
+cd client
+npm run preview
+```
+
+## Demo accounts
+
+The default mock data includes these accounts:
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Admin | `admin@brightloop.test` | Any password with at least 6 characters |
+| Staff | `staff@brightloop.test` | Any password with at least 6 characters |
+| Customer | `customer@brightloop.test` | Any password with at least 6 characters |
+
+The mock login checks the email against the seeded accounts and requires a password of six or more characters. New registrations use the stronger password rules shown in the UI: at least nine characters, one uppercase letter, one lowercase letter, and one special character.
+
+## Configuration
+
+The frontend uses the mock adapter when `VITE_USE_MOCKS=true`. The repository includes this default configuration in [`client/.env.example`](./client/.env.example).
+
+To create a local environment file explicitly:
+
+```bash
+cp client/.env.example client/.env
+```
+
+For a real API integration, set `VITE_USE_MOCKS=false` and provide an API implementation that matches the routes used by [`client/src/api/http.js`](./client/src/api/http.js). Requests are made relative to `/api`, so configure a development proxy or serve the frontend behind the API host.
+
+## Project structure
+
+```text
+.
+├── client/
+│   ├── src/
+│   │   ├── api/          Axios client and API error handling
+│   │   ├── auth/         Authentication context and route guards
+│   │   ├── components/   Reusable UI components
+│   │   ├── layouts/      Operations and customer portal layouts
+│   │   ├── mocks/        Stateful mock API and seeded demo data
+│   │   ├── pages/p3/     Authentication, catalog, billing, and portal screens
+│   │   ├── App.jsx       Router, providers, and role-aware route composition
+│   │   └── index.css     Global styles and Tailwind entry point
+│   ├── package.json
+│   └── vite.config.js
+├── docs/
+│   └── ASSUMPTIONS.md    Frontend implementation assumptions
+├── ARCHITECTURE.md       Proposed domain and system architecture
+└── package.json          Root scripts for setup, development, and builds
+```
+
+## Technology
+
+| Area | Current implementation |
+| --- | --- |
+| UI | React 18 |
+| Build tool | Vite 5 |
+| Routing | React Router 6 |
+| Styling | Tailwind CSS 3 |
+| Data fetching | Axios and TanStack Query |
+| Forms and validation | React Hook Form, Zod, and `@hookform/resolvers` |
+| Icons | Lucide React |
+| Date utilities | date-fns |
+| API mode | Stateful Axios mock adapter or a relative `/api` backend |
+
+The broader target architecture is documented in [`ARCHITECTURE.md`](./ARCHITECTURE.md). It describes a modular backend with PostgreSQL, Prisma, Redis/BullMQ, notifications, and analytics; those services are not included in the current frontend-only checkout.
+
+## Main workflows
+
+### Subscription lifecycle
+
+```text
+Customer → Product / Plan → Quotation → Subscription → Invoice → Payment → Revenue insight
+```
+
+The operations workspace exposes the catalog, customer, subscription, and migration workflows from the dashboard. Subscription details include lifecycle actions and a chronological activity timeline.
+
+### Spreadsheet migration
 
 ```text
 Upload Excel / CSV
-        |
-        v
-File Analysis
-        |
-        v
-Column Mapping
-        |
-        v
-Data Validation
-        |
-        v
-Migration Preview
-        |
-        v
-Admin Confirmation
-        |
-        v
-Batch Data Import
-        |
-        v
-Migration Report
+        ↓
+Analyze files
+        ↓
+Map columns
+        ↓
+Validate records
+        ↓
+Preview changes
+        ↓
+Confirm import
+        ↓
+Review migration report
 ```
 
----
+The mock mode includes representative valid, warning, error, and duplicate rows so the migration UI can be evaluated without uploaded production data.
 
-## 👨‍💻 Team
+## Development notes
 
-Built by a team of three passionate developers.
+- Mock state is held in memory and resets when the page is reloaded or the mock data reset action is used.
+- Currency formatting currently defaults to INR (`₹`) and uses the `en-IN` locale.
+- Dates are represented consistently as `YYYY-MM-DD` strings in the frontend.
+- Routes from `routes.p3.jsx` and the reserved P4 route surface are composed by [`client/src/App.jsx`](./client/src/App.jsx).
+- Authentication state is stored in browser `localStorage` for the prototype. Do not use the mock credentials or storage approach for production authentication.
 
-| Member | Responsibility |
-|---|---|
-| Sebin  | Frontend Development & UI/UX |
-|  Vishnuraj VM | Backend Development, 
-| Nimisha   |  Database & Billing |
-| Sanjana Bejoy| Data Migration, Intelligence & Analytics |
+## Documentation
 
----
+- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — proposed system design, module boundaries, data model, and security boundaries.
+- [`docs/ASSUMPTIONS.md`](./docs/ASSUMPTIONS.md) — frontend stack and behavior assumptions.
 
-## 🎯 Project Goals
+## Project status
 
-- Eliminate spreadsheet-based subscription management.
-- Automate recurring billing and invoicing.
-- Improve payment visibility and recovery.
-- Simplify business data migration.
-- Provide actionable revenue insights.
-- Deliver a scalable and reliable subscription platform.
+🚧 **Under active development**
 
----
+This is a hackathon-stage prototype. The frontend flows and mock data are available for demonstration; backend persistence, payment-provider integrations, scheduled jobs, email delivery, and production authentication remain planned integration work.
 
-## 🔮 Future Enhancements
+## Contributing
 
-- Direct migration from third-party subscription platforms.
-- Payment gateway integrations.
-- Advanced revenue forecasting.
-- Automated customer communication.
-- Multi-company support.
-- Advanced financial reporting.
-- More intelligent churn prediction.
-
----
-
-##  Contributing
-
-Contributions, suggestions, and feedback are welcome!
+Contributions and feedback are welcome:
 
 1. Fork the repository.
-2. Create a feature branch.
-3. Commit your changes.
-4. Push your branch.
-5. Open a Pull Request.
+2. Create a focused feature branch.
+3. Make and test your changes.
+4. Open a pull request describing the user-facing impact.
 
----
+## License
 
-## 📌 Project Status
-
-🚧 **Under Development**
-
-Built as a hackathon project with a vision to make subscription management smarter, simpler, and more accessible.
+No license has been specified yet. Contact the project maintainers before redistributing or using the project outside its intended development context.
 
 ---
 
 <p align="center">
-  <b>SubscriptIQ</b><br>
-  Every Subscription. Every Payment. One Intelligent Platform. 🚀
+  <strong>SubscriptIQ</strong><br>
+  Every subscription. Every payment. One intelligent platform.
 </p>
