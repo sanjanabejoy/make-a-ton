@@ -136,6 +136,7 @@ The broader target architecture is documented in [`ARCHITECTURE.md`](./ARCHITECT
 
 ### Subscription lifecycle
 
+
 ```text
 Customer → Product / Plan → Quotation → Subscription → Invoice → Payment → Revenue insight
 ```
