@@ -430,6 +430,7 @@ subscriptiq/
 
 If Nuxt server APIs are used instead of a separate NestJS app, keep the same domain boundaries under the Nuxt server directory.
 
+
 ## 15. Hackathon Implementation Sequence
 
 1. Authentication, roles and database foundation.
